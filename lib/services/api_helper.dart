@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:final_app/model/card_add_model.dart';
 import 'package:final_app/model/current_user_model.dart';
+import 'package:final_app/model/detail_model.dart';
 import 'package:final_app/model/product_model.dart';
 import 'package:final_app/model/user_model.dart';
 
@@ -152,6 +153,50 @@ class ApiHelper {
       );
       if (response.statusCode == 200) {
         return ProductResponse.fromJson(response.data);
+      } else {
+        throw Exception("Failed to get by one: ${response.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("General error: $e");
+    }
+  }
+
+  Future<DetailDataModel> showOne(
+      {required String token, required String productID}) async {
+    try {
+      final response = await dio.get(
+        "http://192.168.100.39:8000/api/show/$productID",
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return DetailDataModel.fromJson(response.data);
+      } else {
+        throw Exception("Failed to get by one: ${response.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("General error: $e");
+    }
+  }
+
+  Future<DetailDataModel> addToCard(
+      {required String token, required String productID}) async {
+    try {
+      final response = await dio.post(
+        "http://192.168.100.39:8000/api/buy/$productID",
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return DetailDataModel.fromJson(response.data);
       } else {
         throw Exception("Failed to get by one: ${response.statusCode}");
       }

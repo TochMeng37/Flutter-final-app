@@ -94,7 +94,11 @@ class MainScreen extends StatelessWidget {
                                   TextButton(
                                     child: const Text('View'),
                                     onPressed: () {
-                                      Get.to(() => HomePage());
+                                      controller.getOne(
+                                          productID: controller
+                                              .product[index].id
+                                              .toString());
+                                      Get.to(() => DetailScreen());
                                     },
                                   ),
                                 ],

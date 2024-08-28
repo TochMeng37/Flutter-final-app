@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:final_app/model/current_user_model.dart';
+import 'package:final_app/model/detail_model.dart';
 import 'package:final_app/model/product_model.dart';
 import 'package:final_app/services/api_helper.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ class ProductController extends GetxController {
   final box = GetStorage();
   ProductResponse _product = ProductResponse();
   bool isLoding = false;
+  DetailDataModel detailRes = DetailDataModel();
 
   List<DataResponse> get product => _product.data ?? [];
   @override
@@ -36,6 +38,31 @@ class ProductController extends GetxController {
         Get.snackbar("Error", "Invalid credentials. Please log in again.");
       }
       update();
+    }
+  }
+
+  Future<void> getOne({required String productID}) async {
+    try {
+      final token = box.read("access_token");
+      final response =
+          await _apiHelper.showOne(token: token, productID: productID);
+      detailRes = response;
+      update();
+    } catch (e) {
+      Get.snackbar("Get Data", e.toString());
+    }
+  }
+
+  void getTocart({required String productID}) async {
+    try {
+      final token = box.read("access_token");
+      final response =
+          await _apiHelper.addToCard(token: token, productID: productID);
+      Get.snackbar("Buy Products", "Your products will be available");
+      getAllPro();
+      update();
+    } catch (e) {
+      Get.snackbar("Get Data", e.toString());
     }
   }
 

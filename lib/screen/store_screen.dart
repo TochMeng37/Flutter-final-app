@@ -1,11 +1,12 @@
 import 'package:final_app/constant/constant.dart';
 import 'package:final_app/controllers/add_tocard.dart';
+import 'package:final_app/controllers/product_controller.dart';
 import 'package:final_app/widget/support_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class StoreScreen extends StatelessWidget {
-  final AddTocard controller = Get.put(AddTocard());
+  final ProductController controller = Get.put(ProductController());
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class StoreScreen extends StatelessWidget {
               // Wrapping ListView.builder inside a Container with height
               Container(
                 height: Get.height, // Specify a fixed height
-                child: GetBuilder<AddTocard>(
+                child: GetBuilder<ProductController>(
                   builder: (context) {
                     return ListView.builder(
                       itemCount: controller.card.length,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:final_app/model/card_add_model.dart';
 import 'package:final_app/model/current_user_model.dart';
 import 'package:final_app/model/detail_model.dart';
 import 'package:final_app/model/product_model.dart';
@@ -13,7 +14,8 @@ class ProductController extends GetxController {
   ProductResponse _product = ProductResponse();
   bool isLoding = false;
   DetailDataModel detailRes = DetailDataModel();
-
+  AddCardResponse _card = AddCardResponse();
+  List<Products> get card => _card.products ?? [];
   List<DataResponse> get product => _product.data ?? [];
   @override
   void onInit() {
@@ -59,9 +61,25 @@ class ProductController extends GetxController {
       final response =
           await _apiHelper.addToCard(token: token, productID: productID);
       Get.snackbar("Buy Products", "Your products will be available");
-      getAllPro();
+      getBuys();
       update();
     } catch (e) {
+      Get.snackbar("Get Data", e.toString());
+    }
+  }
+
+  void getBuys() async {
+    isLoding = true;
+    update();
+    try {
+      final token = box.read("access_token");
+      final response = await _apiHelper.getBuy(token: token);
+      _card = response;
+      isLoding = false;
+      update();
+    } catch (e) {
+      isLoding = false;
+      update();
       Get.snackbar("Get Data", e.toString());
     }
   }

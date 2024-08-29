@@ -1,6 +1,7 @@
 import 'package:final_app/constant/constant.dart';
 import 'package:final_app/controllers/add_tocard.dart';
 import 'package:final_app/controllers/product_controller.dart';
+import 'package:final_app/screen/payment_screen.dart';
 import 'package:final_app/widget/support_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -78,9 +79,9 @@ class StoreScreen extends StatelessWidget {
                                     },
                                   ),
                                   TextButton(
-                                    child: const Text('Buy'),
+                                    child: const Text('Payment'),
                                     onPressed: () {
-                                      // Implement buy action
+                                      Get.to(() => MySample());
                                     },
                                   ),
                                 ],

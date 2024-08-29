@@ -41,6 +41,7 @@ dependencies:
   curved_navigation_bar: ^1.0.6 
   image_card: ^0.0.4
   animate_do: ^3.3.4
+  flutter_credit_card: ^4.0.1
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,7 @@ flutter:
     - images/B&G_Squre.png
     - images/banner.png
     - images/laptop.png
+    - images/bg-dark.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

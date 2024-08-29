@@ -83,7 +83,7 @@ class ProfielScreen extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 80.0),
               Center(
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2,

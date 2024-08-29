@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:final_app/controllers/product_controller.dart';
+import 'package:final_app/screen/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -145,8 +146,9 @@ class DetailScreen extends StatelessWidget {
                               child: MaterialButton(
                                 onPressed: () {
                                   controller.getTocart(
-                                      productID: controller.detailRes.data!.id
-                                          .toString());
+                                    productID: controller.detailRes.data!.id
+                                        .toString(),
+                                  );
                                 },
                                 height: 45,
                                 color: Colors.lightGreen,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:final_app/model/card_add_model.dart';
 import 'package:final_app/model/current_user_model.dart';
@@ -21,7 +23,7 @@ class ApiHelper {
 
     try {
       final response = await dio.post(
-        "http://192.168.100.39:8000/api/auth/register",
+        "http://10.0.2.2:8000/api/auth/register",
         data: formData,
         options: Options(
           headers: {
@@ -55,7 +57,7 @@ class ApiHelper {
 
     try {
       final response = await dio.post(
-        "http://192.168.100.39:8000/api/auth/login",
+        "http://10.0.2.2:8000/api/auth/login",
         data: formData,
         options: Options(
           headers: {
@@ -80,7 +82,7 @@ class ApiHelper {
   Future<CurrentUserResponse> getUserAccount({required String token}) async {
     try {
       final response = await dio.get(
-        "http://192.168.100.39:8000/api/auth/me",
+        "http://10.0.2.2:8000/api/auth/me",
         options: Options(
           headers: {
             "Accept": "application/json",
@@ -101,7 +103,7 @@ class ApiHelper {
   Future<String> logout({required String token}) async {
     try {
       final response = await dio.post(
-        "http://192.168.100.39:8000/api/auth/logout",
+        "http://10.0.2.2:8000/api/auth/logout",
         options: Options(
           headers: {
             'Accept': 'application/json',
@@ -122,7 +124,7 @@ class ApiHelper {
   Future<AddCardResponse> getBuy({required String token}) async {
     try {
       final response = await dio.get(
-        "http://192.168.100.39:8000/api/getBuyAll",
+        "http://10.0.2.2:8000/api/getBuyAll",
         options: Options(
           headers: {
             'Accept': 'application/json',
@@ -143,7 +145,7 @@ class ApiHelper {
   Future<ProductResponse> getallProducts({required String token}) async {
     try {
       final response = await dio.get(
-        "http://192.168.100.39:8000/api/get-products",
+        "http://10.0.2.2:8000/api/get-products",
         options: Options(
           headers: {
             'Accept': 'application/json',
@@ -165,7 +167,7 @@ class ApiHelper {
       {required String token, required String productID}) async {
     try {
       final response = await dio.get(
-        "http://192.168.100.39:8000/api/show/$productID",
+        "http://10.0.2.2:8000/api/show/$productID",
         options: Options(
           headers: {
             'Accept': 'application/json',
@@ -187,7 +189,7 @@ class ApiHelper {
       {required String token, required String productID}) async {
     try {
       final response = await dio.post(
-        "http://192.168.100.39:8000/api/buy/$productID",
+        "http://10.0.2.2:8000/api/buy/$productID",
         options: Options(
           headers: {
             'Accept': 'application/json',
@@ -199,6 +201,41 @@ class ApiHelper {
         return DetailDataModel.fromJson(response.data);
       } else {
         throw Exception("Failed to get by one: ${response.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("General error: $e");
+    }
+  }
+
+  Future<String> addProduct(
+      {required String token,
+      required String productName,
+      required String description,
+      required String price,
+      File? photo}) async {
+    var _formData = FormData.fromMap({
+      "product_name": productName,
+      "description": description,
+      "price": price,
+      "photo": await MultipartFile.fromFile(photo!.path)
+    });
+    try {
+      final response = await dio.post(
+        "http://10.0.2.2:8000/api/product",
+        data: _formData,
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'multipart/form-data'
+
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return "Add Products successfully";
+      } else {
+        throw Exception("Failed to Add: ${response.statusCode}");
       }
     } catch (e) {
       throw Exception("General error: $e");

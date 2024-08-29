@@ -53,7 +53,7 @@ class ProfielScreen extends StatelessWidget {
                   builder: (context) {
                     return CircleAvatar(
                       backgroundImage: NetworkImage(
-                          'http://192.168.100.39:8000/profile/${controller.users.profileUrl}',
+                          'http://10.0.2.2:8000/profile/${controller.users.profileUrl}',
                           scale: 1.0),
                       radius: 100,
                     );

@@ -190,17 +190,7 @@ class MySampleState extends State<MySample> {
                               onCreditCardModelChange: onCreditCardModelChange,
                             ),
                             const SizedBox(height: 20),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: InputDecorator(
-                                decoration: InputDecoration(),
-                                child:
-                                    GetBuilder<ProductController>(builder: (_) {
-                                  return Text("300");
-                                }),
-                              ),
-                            ),
+
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),
@@ -290,11 +280,7 @@ class MySampleState extends State<MySample> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 15),
                                 alignment: Alignment.center,
-                                child: InkWell(
-                                  onTap: () {
-                                    Get.to(() => HomeScreen());
-                                  },
-                                  child: Text(
+                                child: Text(
                                     'Payment',
                                     style: TextStyle(
                                       color: Colors.black,
@@ -305,7 +291,6 @@ class MySampleState extends State<MySample> {
                                   ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -322,6 +307,7 @@ class MySampleState extends State<MySample> {
 
   void _onValidate() {
     if (formKey.currentState?.validate() ?? false) {
+      Get.snackbar("Message", "Complet Buy");
       print('valid!');
     } else {
       print('invalid!');

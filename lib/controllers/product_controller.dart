@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:final_app/model/card_add_model.dart';
 import 'package:final_app/model/current_user_model.dart';
@@ -7,6 +8,7 @@ import 'package:final_app/model/product_model.dart';
 import 'package:final_app/services/api_helper.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProductController extends GetxController {
   final _apiHelper = ApiHelper();

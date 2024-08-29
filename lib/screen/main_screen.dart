@@ -65,7 +65,7 @@ class MainScreen extends StatelessWidget {
                 child: GetBuilder<ProductController>(
                   builder: (context) {
                     return ListView.builder(
-                      itemCount: controller.product?.length,
+                      itemCount: controller.product.length,
                       itemBuilder: (context, index) {
                         return Card(
                           elevation: 4.0,
@@ -73,21 +73,21 @@ class MainScreen extends StatelessWidget {
                             children: [
                               ListTile(
                                 title: Text(
-                                    "${controller.product?[index].productName}"),
+                                    "${controller.product[index].productName}"),
                                 subtitle: Text(
-                                    "${controller.product?[index].price} USD"),
+                                    "${controller.product[index].price} USD"),
                                 trailing: Icon(Icons.favorite_outline),
                               ),
                               Container(
                                 height: 200.0,
                                 child: Image.network(
-                                    'http://192.168.100.39:8000/products/${controller.product?[index].image}'),
+                                    'http://10.0.2.2:8000/products/${controller.product[index].image}'),
                               ),
                               Container(
                                 padding: EdgeInsets.all(16.0),
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                    '${controller.product?[index].description}'),
+                                    '${controller.product[index].description}'),
                               ),
                               ButtonBar(
                                 children: [

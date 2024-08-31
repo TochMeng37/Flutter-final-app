@@ -17,22 +17,28 @@ class ProductController extends GetxController {
   bool isLoding = false;
   DetailDataModel detailRes = DetailDataModel();
   AddCardResponse _card = AddCardResponse();
+
   List<Products> get card => _card.products ?? [];
   List<DataResponse> get product => _product.data ?? [];
+
   @override
   void onInit() {
-    getAllPro();
+    refreshData();
     super.onInit();
   }
 
-  void getAllPro() async {
+  Future<void> refreshData() async {
+    await getAllPro(); // Refresh the product list
+    await getBuys(); // Refresh the card items if needed
+  }
+
+  Future<void> getAllPro() async {
     try {
       isLoding = true;
       update();
       final tokens = box.read("access_token");
       final response = await _apiHelper.getallProducts(token: tokens);
       _product = response;
-      print("Product${jsonEncode(_product.data?.length)}");
       isLoding = false;
       update();
     } catch (e) {
@@ -41,15 +47,13 @@ class ProductController extends GetxController {
       if (e.toString().contains('401')) {
         Get.snackbar("Error", "Invalid credentials. Please log in again.");
       }
-      update();
     }
   }
 
   Future<void> getOne({required String productID}) async {
     try {
       final token = box.read("access_token");
-      final response =
-          await _apiHelper.showOne(token: token, productID: productID);
+      final response = await _apiHelper.showOne(token: token, productID: productID);
       detailRes = response;
       update();
     } catch (e) {
@@ -57,20 +61,18 @@ class ProductController extends GetxController {
     }
   }
 
-  void getTocart({required String productID}) async {
+  Future<void> getTocart({required String productID}) async {
     try {
       final token = box.read("access_token");
-      final response =
-          await _apiHelper.addToCard(token: token, productID: productID);
+      final response = await _apiHelper.addToCard(token: token, productID: productID);
       Get.snackbar("Buy Products", "Your products will be available");
-      getBuys();
-      update();
+      await refreshData(); // Refresh data after adding to cart
     } catch (e) {
       Get.snackbar("Get Data", e.toString());
     }
   }
 
-  void getBuys() async {
+  Future<void> getBuys() async {
     isLoding = true;
     update();
     try {
@@ -86,7 +88,7 @@ class ProductController extends GetxController {
     }
   }
 
-  void setToken(String token) async {
+  Future<void> setToken(String token) async {
     await box.write("access_token", token);
   }
 }

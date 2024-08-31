@@ -6,6 +6,8 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:get/get.dart';
 import 'dart:ui';
 
+import 'package:quickalert/quickalert.dart';
+
 class AppColors {
   AppColors._();
 
@@ -305,12 +307,19 @@ class MySampleState extends State<MySample> {
     );
   }
 
-  void _onValidate() {
+  void _onValidate() async {
     if (formKey.currentState?.validate() ?? false) {
-      Get.snackbar("Message", "Complet Buy");
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.success,
+        text: 'Transaction Completed Successfully!',
+      );
+      await Future.delayed(Duration(seconds: 2));
+      Get.back();
       print('valid!');
     } else {
       print('invalid!');
+
     }
   }
 

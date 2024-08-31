@@ -59,13 +59,13 @@ class StoreScreen extends StatelessWidget {
                                     Text("${controller.card[index].price} USD"),
                                 trailing: Icon(Icons.favorite_outline),
                               ),
-                              Container(
+                              SizedBox(
                                 height: 200.0,
                                 child: Image.network(
-                                    'http://192.168.100.39:8000/products/${controller.card[index].image}'),
+                                    "http://10.0.2.2:8000/products/${controller.card[index].image}"),
                               ),
                               Container(
-                                padding: EdgeInsets.all(16.0),
+                                padding: const EdgeInsets.all(16.0),
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                     '${controller.card[index].description}'),

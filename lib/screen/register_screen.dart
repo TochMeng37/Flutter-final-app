@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:final_app/controllers/resgister_controller.dart';
 import 'package:final_app/screen/login_screen.dart';
 import 'package:final_app/widget/support_widget.dart';
@@ -35,18 +37,42 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 ),
                 Center(
+                  child: GetBuilder<ResgisterController>(
+                    builder: (context) {
+                      return GestureDetector(
+                        onTap: () {
+                          _controller.SelectProfile();
+                        },
+                        child: CircleAvatar(
+                          radius: 50, // Adjust the radius as needed
+                          backgroundImage: _controller.Profile != null
+                              ? FileImage(_controller.Profile!)
+                              : null,
+                          child: _controller.Profile == null
+                              ? Icon(
+                            Icons.person, // Default user icon
+                            size: 50, // Adjust the size as needed
+                          )
+                              : null,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Center(
                   child: Text(
                     "Sign up",
                     style: AppWidget.semiboldTextFeildStyle(),
                   ),
                 ),
-                const SizedBox(height: 10.0),
+
                 Center(
                   child: Text(
                     "Welcome To Login App PC Central!",
                     style: AppWidget.lightTextFeildStyle(),
                   ),
                 ),
+
                 const SizedBox(height: 20.0),
                 Text(
                   "Username",
@@ -65,12 +91,6 @@ class RegisterScreen extends StatelessWidget {
                       border: InputBorder.none,
                       hintText: "Please Input The Username",
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a username';
-                      }
-                      return null;
-                    },
                   ),
                 ),
                 const SizedBox(height: 20.0),
@@ -91,15 +111,6 @@ class RegisterScreen extends StatelessWidget {
                       border: InputBorder.none,
                       hintText: "Please Input The Email",
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter an email';
-                      }
-                      if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
-                        return 'Please enter a valid email';
-                      }
-                      return null;
-                    },
                   ),
                 ),
                 const SizedBox(height: 20.0),
@@ -121,15 +132,6 @@ class RegisterScreen extends StatelessWidget {
                       border: InputBorder.none,
                       hintText: "Please Input The Password",
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a password';
-                      }
-                      if (value.length < 6) {
-                        return 'Password must be at least 6 characters long';
-                      }
-                      return null;
-                    },
                   ),
                 ),
                 const SizedBox(height: 20.0),
@@ -144,7 +146,7 @@ class RegisterScreen extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         _controller.Register(
-                            name: name, email: email, password: password);
+                            name: _nameController.text, email: _emailController.text, password: _passwordController.text, profile: _controller.Profile);
                       },
                       child: const Center(
                         child: Text(

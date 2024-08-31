@@ -43,6 +43,8 @@ dependencies:
   animate_do: ^3.3.4
   flutter_credit_card: ^4.0.1
   image_picker: ^1.1.2
+  giffy_dialog: ^2.1.0
+  quickalert: ^1.1.0
 
 dev_dependencies:
   flutter_test:
